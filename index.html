@@ -31,6 +31,23 @@
 </head>
 <body class="antialiased">
 
+    <!-- MODAL DA APP (LINK CORRIGIDO) -->
+    <div id="app-modal" class="fixed inset-0 z-[100] bg-black/90 hidden flex items-center justify-center p-0 md:p-4 fade-in">
+        <div class="bg-[#0e1117] w-full h-full md:h-[90vh] md:w-[1000px] md:rounded-2xl relative shadow-2xl overflow-hidden flex flex-col border border-white/10">
+            <div class="flex justify-between items-center p-4 border-b border-white/10 bg-[#0e1117]">
+                <div class="flex items-center gap-2">
+                    <img src="logo.png" class="h-6 w-auto" onerror="this.style.display='none'">
+                    <span class="font-bold text-sm text-gray-400">App Luso-IA</span>
+                </div>
+                <button onclick="closeApp()" class="text-gray-400 hover:text-white transition p-2 bg-white/5 rounded-full">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <!-- IFRAME A APONTAR PARA O LINK SEGURO -->
+            <iframe src="https://luso-ia-app.streamlit.app/?embed=true" class="w-full h-full border-none bg-[#0e1117]"></iframe>
+        </div>
+    </div>
+
     <!-- FUNDO TÉCNICO -->
     <div class="fixed inset-0 z-0 pointer-events-none">
         <div class="absolute inset-0 grid-bg opacity-20"></div>
@@ -41,19 +58,18 @@
     <!-- NAVBAR -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-3 border-b border-transparent">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
-            <!-- LOGÓTIPO AUMENTADO (h-24) -->
             <div class="flex items-center">
                 <img src="logo.png" alt="Luso-IA Logo" class="h-20 md:h-24 w-auto drop-shadow-xl" 
                      onerror="this.onerror=null; this.src=''; this.parentElement.innerHTML='<span class=\'font-display font-bold text-3xl text-white\'>Luso-<span class=\'text-blue-500\'>IA</span></span>'">
             </div>
-            
             <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
                 <a href="#funcionalidades" class="hover:text-white transition">Funcionalidades</a>
                 <a href="#paises" class="hover:text-white transition">Países</a>
                 <a href="#demo" class="hover:text-white transition">Demo</a>
             </div>
             <div class="flex gap-3">
-                <a href="https://app.luso-ia.com" class="px-6 py-2.5 text-sm font-medium text-gray-300 hover:text-white transition">Login</a>
+                <!-- BOTÃO LOGIN ABRE MODAL -->
+                <button onclick="openApp()" class="px-6 py-2.5 text-sm font-medium text-gray-300 hover:text-white transition cursor-pointer">Login</button>
                 <button onclick="scrollToCountries()" class="px-8 py-2.5 text-sm font-bold bg-white text-brand-900 rounded-full hover:bg-gray-100 transition shadow-lg shadow-white/10">
                     Começar
                 </button>
@@ -85,9 +101,9 @@
                 <button onclick="scrollToCountries()" class="bg-blue-600 hover:bg-blue-500 text-white text-lg px-8 py-4 rounded-2xl font-bold transition shadow-xl shadow-blue-600/20 transform hover:-translate-y-1">
                     Selecionar o meu País
                 </button>
-                <a href="#demo" class="glass text-white text-lg px-8 py-4 rounded-2xl font-semibold transition hover:bg-white/5 flex items-center justify-center gap-2">
+                <button onclick="openApp()" class="glass text-white text-lg px-8 py-4 rounded-2xl font-semibold transition hover:bg-white/5 flex items-center justify-center gap-2 cursor-pointer">
                     <i class="fa-solid fa-play text-xs"></i> Ver Demo
-                </a>
+                </button>
             </div>
         </div>
     </header>
@@ -116,18 +132,18 @@
         </div>
     </section>
 
-    <!-- DEMO (IMAGEM ESTÁTICA SEGURA) -->
+    <!-- DEMO -->
     <section id="demo" class="py-24 px-6 relative z-10 text-center">
         <div class="max-w-5xl mx-auto">
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-8">Veja a Luso-IA em ação</h2>
-            <div class="relative rounded-3xl border border-white/10 shadow-2xl overflow-hidden group bg-black">
+            <div class="relative rounded-3xl border border-white/10 shadow-2xl overflow-hidden group bg-black cursor-pointer" onclick="openApp()">
                 <div class="absolute inset-0 bg-blue-600/5 group-hover:bg-transparent transition duration-500 z-10"></div>
                 <!-- Imagem Dashboard Segura -->
                 <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" class="w-full opacity-80 object-cover h-[500px]" alt="Dashboard Demo">
                 <div class="absolute inset-0 flex flex-col items-center justify-center z-20">
-                    <a href="https://app.luso-ia.com" target="_blank" class="glass bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-500 transition transform hover:scale-105 shadow-xl">
-                        <i class="fa-solid fa-rocket mr-2"></i> Testar App Agora
-                    </a>
+                    <div class="glass bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-500 transition transform hover:scale-105 shadow-xl">
+                        <i class="fa-solid fa-rocket mr-2"></i> Abrir App
+                    </div>
                 </div>
             </div>
         </div>
@@ -214,9 +230,8 @@
     <footer class="py-16 border-t border-white/5 text-sm bg-black/40">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-2">
-                <!-- LOGÓTIPO AUMENTADO NO FOOTER TAMBÉM (h-16) -->
                 <div class="flex items-center mb-4">
-                    <img src="logo.png" alt="Luso-IA Logo" class="h-16 w-auto opacity-70">
+                    <img src="logo.png" alt="Luso-IA Logo" class="h-10 w-auto opacity-70">
                 </div>
                 <p class="text-gray-600 mb-6 max-w-xs">A plataforma de inteligência artificial líder para a comunidade lusófona. Impulsione o seu negócio hoje.</p>
             </div>
@@ -265,17 +280,14 @@
                 <div class="space-y-4">
                     <h3 class="font-bold text-gray-500 text-sm uppercase tracking-widest mb-4">Quem confia em nós</h3>
                     <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start">
-                        <!-- IMAGEM 1 -->
                         <img id="ov-t1-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
                         <div><p id="ov-t1-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t1-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t1-role" class="text-xs text-blue-400">Cargo</p></div>
                     </div>
                     <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start">
-                        <!-- IMAGEM 2 -->
                         <img id="ov-t2-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
                         <div><p id="ov-t2-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t2-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t2-role" class="text-xs text-blue-400">Cargo</p></div>
                     </div>
                     <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start">
-                        <!-- IMAGEM 3 -->
                         <img id="ov-t3-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
                         <div><p id="ov-t3-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t3-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t3-role" class="text-xs text-blue-400">Cargo</p></div>
                     </div>
@@ -286,12 +298,23 @@
 
     <script>
         const TALLY_LINK = "https://tally.so/r/81qLVx";
-
+        
         window.addEventListener('scroll', function() {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) { nav.classList.add('nav-blur'); nav.classList.remove('py-4'); nav.classList.add('py-2'); } 
             else { nav.classList.remove('nav-blur'); nav.classList.add('py-4'); nav.classList.remove('py-2'); }
         });
+
+        // MODAL LOGIC (Link corrigido para luso-ia-app.streamlit.app)
+        function openApp() {
+            document.querySelector('#app-modal iframe').src = "https://luso-ia-app.streamlit.app/?embed=true";
+            document.getElementById('app-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeApp() {
+            document.getElementById('app-modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
 
         function scrollToCountries() { document.getElementById('paises').scrollIntoView({ behavior: 'smooth' }); }
 
@@ -301,9 +324,9 @@
             document.body.style.overflow = 'hidden';
             document.getElementById('buy-button').href = TALLY_LINK;
 
-            // DADOS E IMAGENS LOCAIS (Pasta /fotos/)
+            // DADOS E IMAGENS LOCAIS
             const data = {
-                'pt': { badge: "Portugal", title: "Marketing Nacional", desc: "Ideal para PMEs e Clínicas.", price: "19,90€", extra: "IVA incluído.", 
+                'pt': { badge: "Portugal", title: "Marketing Nacional", desc: "Ideal para PMEs, Advogados e Clínicas.", price: "19,90€", extra: "IVA incluído.", 
                     t1: { t: "Finalmente uma IA que não escreve 'galera'.", n: "Miguel Ferreira", r: "Imobiliária Braga", img: "fotos/pt1.jpg" }, 
                     t2: { t: "Poupei centenas de euros.", n: "Dra. Sofia Lima", r: "Dentista", img: "fotos/pt2.jpg" }, 
                     t3: { t: "Essencial para pequeno negócio.", n: "Carlos Mendes", r: "Restaurante Porto", img: "fotos/pt3.jpg" } 
@@ -352,6 +375,7 @@
             document.getElementById('ov-price').innerText = s.price;
             document.getElementById('ov-extra').innerText = s.extra;
             
+            // ATUALIZA FOTOS E TEXTOS
             ['1','2','3'].forEach(id => {
                 document.getElementById('ov-t'+id+'-text').innerText = '"' + s['t'+id].t + '"';
                 document.getElementById('ov-t'+id+'-name').innerText = s['t'+id].n;
