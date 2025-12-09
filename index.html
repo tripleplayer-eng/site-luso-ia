@@ -24,58 +24,39 @@
         body { background-color: #020617; color: white; overflow-x: hidden; }
         .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
         .glass:hover { border-color: rgba(14, 165, 233, 0.4); background: rgba(255, 255, 255, 0.04); }
+        .text-gradient { background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .nav-blur { background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        
-        /* Modal */
-        .hidden { display: none; }
-        .fade-in { animation: fadeIn 0.3s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        #app-modal { backdrop-filter: blur(8px); }
-        
-        /* Fundo */
         .grid-bg { background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px; mask-image: linear-gradient(to bottom, black 40%, transparent 100%); }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- MODAL DA APP (JANELA FLUTUANTE) -->
-    <div id="app-modal" class="fixed inset-0 z-[100] bg-black/90 hidden flex items-center justify-center p-0 md:p-4 fade-in">
-        <div class="bg-[#0e1117] w-full h-full md:h-[90vh] md:w-[1000px] md:rounded-2xl relative shadow-2xl overflow-hidden flex flex-col border border-white/10">
-            <!-- Barra de Topo do Modal -->
-            <div class="flex justify-between items-center p-4 border-b border-white/10 bg-[#0e1117]">
-                <div class="flex items-center gap-2">
-                    <img src="logo.png" class="h-6 w-auto" onerror="this.style.display='none'">
-                    <span class="font-bold text-sm text-gray-400">App Luso-IA</span>
-                </div>
-                <button onclick="closeApp()" class="text-gray-400 hover:text-white transition p-2 bg-white/5 rounded-full">
-                    <i class="fa-solid fa-xmark text-lg"></i>
-                </button>
-            </div>
-            <!-- Iframe da App -->
-            <iframe src="https://luso-ia-app.streamlit.app/?embed=true" class="w-full h-full border-none bg-[#0e1117]"></iframe>
-        </div>
-    </div>
-
     <!-- FUNDO TÉCNICO -->
     <div class="fixed inset-0 z-0 pointer-events-none">
         <div class="absolute inset-0 grid-bg opacity-20"></div>
         <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/20 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px]"></div>
     </div>
 
     <!-- NAVBAR -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4 border-b border-transparent">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-3 border-b border-transparent">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <!-- LOGÓTIPO AUMENTADO (h-24) -->
             <div class="flex items-center">
-                <img src="logo.png" alt="Luso-IA Logo" class="h-14 w-auto drop-shadow-lg" 
-                     onerror="this.onerror=null; this.src=''; this.parentElement.innerHTML='<span class=\'font-display font-bold text-2xl text-white\'>Luso-<span class=\'text-blue-500\'>IA</span></span>'">
+                <img src="logo.png" alt="Luso-IA Logo" class="h-20 md:h-24 w-auto drop-shadow-xl" 
+                     onerror="this.onerror=null; this.src=''; this.parentElement.innerHTML='<span class=\'font-display font-bold text-3xl text-white\'>Luso-<span class=\'text-blue-500\'>IA</span></span>'">
             </div>
+            
             <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
                 <a href="#funcionalidades" class="hover:text-white transition">Funcionalidades</a>
                 <a href="#paises" class="hover:text-white transition">Países</a>
+                <a href="#demo" class="hover:text-white transition">Demo</a>
             </div>
             <div class="flex gap-3">
-                <button onclick="openApp()" class="px-5 py-2 text-sm font-medium text-gray-300 hover:text-white transition border border-white/10 rounded-full">Login</button>
-                <button onclick="scrollToCountries()" class="px-6 py-2 text-sm font-bold bg-white text-brand-900 rounded-full hover:bg-gray-100 transition shadow-lg shadow-white/10">Começar</button>
+                <a href="https://app.luso-ia.com" class="px-6 py-2.5 text-sm font-medium text-gray-300 hover:text-white transition">Login</a>
+                <button onclick="scrollToCountries()" class="px-8 py-2.5 text-sm font-bold bg-white text-brand-900 rounded-full hover:bg-gray-100 transition shadow-lg shadow-white/10">
+                    Começar
+                </button>
             </div>
         </div>
     </nav>
@@ -84,48 +65,69 @@
     <header class="relative pt-48 pb-32 px-6 text-center z-10">
         <div class="max-w-5xl mx-auto">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-300 text-xs font-bold uppercase tracking-widest mb-8">
-                <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span></span>
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
                 Disponível em toda a Lusofonia
             </div>
-            <h1 class="font-display text-6xl md:text-8xl font-bold mb-8 leading-tight tracking-tight">Marketing com <br><span class="text-gradient">Alma Local.</span></h1>
-            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">A primeira IA que entende se o seu cliente está em Lisboa, Luanda ou Rio de Janeiro.</p>
+            
+            <h1 class="font-display text-6xl md:text-8xl font-bold mb-8 leading-tight tracking-tight">
+                Marketing com <br>
+                <span class="text-gradient">Alma Local.</span>
+            </h1>
+            
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+                A primeira IA que entende se o seu cliente está em Lisboa, Luanda ou Rio de Janeiro. Escreva melhor, venda mais e poupe tempo.
+            </p>
+            
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <button onclick="scrollToCountries()" class="bg-blue-600 hover:bg-blue-500 text-white text-lg px-8 py-4 rounded-2xl font-bold transition shadow-xl shadow-blue-600/20 transform hover:-translate-y-1">Selecionar o meu País</button>
-                <button onclick="openApp()" class="glass text-white text-lg px-8 py-4 rounded-2xl font-semibold transition hover:bg-white/5 flex items-center justify-center gap-2"><i class="fa-solid fa-play text-xs"></i> Ver Demo</button>
+                <button onclick="scrollToCountries()" class="bg-blue-600 hover:bg-blue-500 text-white text-lg px-8 py-4 rounded-2xl font-bold transition shadow-xl shadow-blue-600/20 transform hover:-translate-y-1">
+                    Selecionar o meu País
+                </button>
+                <a href="#demo" class="glass text-white text-lg px-8 py-4 rounded-2xl font-semibold transition hover:bg-white/5 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-play text-xs"></i> Ver Demo
+                </a>
             </div>
         </div>
     </header>
 
     <!-- CARROSSEL -->
     <section class="border-y border-white/5 bg-white/0 overflow-hidden py-10 relative z-10">
-        <div class="max-w-7xl mx-auto px-6 mb-6 text-center"><p class="text-xs font-bold text-gray-500 uppercase tracking-widest">Compatível com todas as plataformas</p></div>
+        <div class="max-w-7xl mx-auto px-6 mb-6 text-center">
+            <p class="text-xs font-bold text-gray-500 uppercase tracking-widest">Compatível com todas as plataformas</p>
+        </div>
         <div class="relative w-full overflow-hidden">
             <div class="flex whitespace-nowrap animate-scroll">
                 <div class="flex gap-16 items-center mx-8 opacity-50 grayscale">
                     <span class="text-2xl font-bold"><i class="fa-brands fa-instagram"></i> Instagram</span>
                     <span class="text-2xl font-bold"><i class="fa-brands fa-linkedin"></i> LinkedIn</span>
-                    <span class="text-2xl font-bold"><i class="fa-brands fa-tiktok"></i> TikTok</span>
                     <span class="text-2xl font-bold"><i class="fa-brands fa-facebook"></i> Facebook</span>
+                    <span class="text-2xl font-bold"><i class="fa-brands fa-tiktok"></i> TikTok</span>
                     <span class="text-2xl font-bold"><i class="fa-brands fa-google"></i> Google SEO</span>
+                    <!-- Repetição -->
                     <span class="text-2xl font-bold"><i class="fa-brands fa-instagram"></i> Instagram</span>
                     <span class="text-2xl font-bold"><i class="fa-brands fa-linkedin"></i> LinkedIn</span>
+                    <span class="text-2xl font-bold"><i class="fa-brands fa-facebook"></i> Facebook</span>
                     <span class="text-2xl font-bold"><i class="fa-brands fa-tiktok"></i> TikTok</span>
+                    <span class="text-2xl font-bold"><i class="fa-brands fa-google"></i> Google SEO</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- DEMO SECTION -->
+    <!-- DEMO (IMAGEM ESTÁTICA SEGURA) -->
     <section id="demo" class="py-24 px-6 relative z-10 text-center">
         <div class="max-w-5xl mx-auto">
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-8">Veja a Luso-IA em ação</h2>
-            <div class="relative rounded-3xl border border-white/10 shadow-2xl overflow-hidden group bg-black cursor-pointer" onclick="openApp()">
-                <div class="absolute inset-0 bg-blue-600/10 group-hover:bg-blue-600/20 transition duration-500 z-10"></div>
-                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" class="w-full opacity-80 object-cover h-[500px]">
+            <div class="relative rounded-3xl border border-white/10 shadow-2xl overflow-hidden group bg-black">
+                <div class="absolute inset-0 bg-blue-600/5 group-hover:bg-transparent transition duration-500 z-10"></div>
+                <!-- Imagem Dashboard Segura -->
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" class="w-full opacity-80 object-cover h-[500px]" alt="Dashboard Demo">
                 <div class="absolute inset-0 flex flex-col items-center justify-center z-20">
-                    <div class="glass bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-500 transition transform hover:scale-105 shadow-xl">
-                        <i class="fa-solid fa-rocket mr-2"></i> Abrir App
-                    </div>
+                    <a href="https://app.luso-ia.com" target="_blank" class="glass bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-500 transition transform hover:scale-105 shadow-xl">
+                        <i class="fa-solid fa-rocket mr-2"></i> Testar App Agora
+                    </a>
                 </div>
             </div>
         </div>
@@ -134,17 +136,54 @@
     <!-- BENTO GRID -->
     <section id="funcionalidades" class="py-24 px-6 relative z-10">
         <div class="max-w-7xl mx-auto">
-            <div class="text-center mb-20"><h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Tudo o que precisa.</h2></div>
+            <div class="text-center mb-20">
+                <h2 class="font-display text-4xl md:text-5xl font-bold mb-6">Tudo o que precisa.<br>Num só lugar.</h2>
+                <p class="text-gray-400">Substitua 5 ferramentas diferentes pela Luso-IA.</p>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="md:col-span-2 glass p-10 rounded-3xl relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-10 opacity-20 group-hover:opacity-40 transition transform group-hover:scale-110 duration-500"><i class="fa-solid fa-earth-americas text-9xl text-blue-500"></i></div>
+                    <div class="absolute top-0 right-0 p-10 opacity-20 group-hover:opacity-40 transition transform group-hover:scale-110 duration-500">
+                        <i class="fa-solid fa-earth-americas text-9xl text-blue-500"></i>
+                    </div>
                     <h3 class="text-2xl font-bold mb-4">Multi-Dialeto Nativo</h3>
                     <p class="text-gray-400 max-w-md">Respeitamos a gramática e a cultura de cada país da CPLP. Não misturamos "zuca" com "tuga".</p>
-                    <div class="mt-8 flex gap-3"><span class="px-3 py-1 rounded bg-blue-500/20 text-blue-300 text-xs font-bold">PT-PT</span><span class="px-3 py-1 rounded bg-green-500/20 text-green-300 text-xs font-bold">PT-BR</span><span class="px-3 py-1 rounded bg-red-500/20 text-red-300 text-xs font-bold">PT-AO</span></div>
+                    <div class="mt-8 flex gap-3">
+                        <span class="px-3 py-1 rounded bg-blue-500/20 text-blue-300 text-xs font-bold">PT-PT</span>
+                        <span class="px-3 py-1 rounded bg-green-500/20 text-green-300 text-xs font-bold">PT-BR</span>
+                        <span class="px-3 py-1 rounded bg-red-500/20 text-red-300 text-xs font-bold">PT-AO</span>
+                    </div>
                 </div>
-                <div class="glass p-10 rounded-3xl flex flex-col justify-center text-center hover:bg-white/5 transition"><div class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 text-2xl mx-auto mb-6"><i class="fa-solid fa-wand-magic-sparkles"></i></div><h3 class="text-xl font-bold mb-2">Copywriting</h3><p class="text-sm text-gray-400">Textos focados em vendas.</p></div>
-                <div class="glass p-10 rounded-3xl flex flex-col justify-center text-center hover:bg-white/5 transition"><div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center text-green-400 text-2xl mx-auto mb-6"><i class="fa-solid fa-camera"></i></div><h3 class="text-xl font-bold mb-2">Imagens IA</h3><p class="text-sm text-gray-400">Gera fotos profissionais.</p></div>
-                <div class="md:col-span-2 glass p-10 rounded-3xl relative overflow-hidden group"><div class="absolute bottom-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition duration-500"><i class="fa-solid fa-shield-halved text-9xl text-white"></i></div><div class="relative z-10"><h3 class="text-2xl font-bold mb-4">Segurança & Privacidade</h3><p class="text-gray-400 max-w-md">Não usamos os seus dados para treinar modelos públicos.</p><div class="mt-8 flex items-center gap-4 text-sm font-bold text-gray-300"><span class="flex items-center"><i class="fa-solid fa-lock text-green-500 mr-2"></i>Encriptado</span><span class="flex items-center"><i class="fa-solid fa-user-shield text-green-500 mr-2"></i>Privado</span></div></div></div>
+
+                <div class="glass p-10 rounded-3xl flex flex-col justify-center text-center hover:bg-white/5 transition">
+                    <div class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center text-purple-400 text-2xl mx-auto mb-6">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Copywriting</h3>
+                    <p class="text-sm text-gray-400">Textos focados em vendas e persuasão.</p>
+                </div>
+
+                <div class="glass p-10 rounded-3xl flex flex-col justify-center text-center hover:bg-white/5 transition">
+                    <div class="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center text-green-400 text-2xl mx-auto mb-6">
+                        <i class="fa-solid fa-camera"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Imagens IA</h3>
+                    <p class="text-sm text-gray-400">Gera fotos profissionais para os seus posts.</p>
+                </div>
+
+                <div class="md:col-span-2 glass p-10 rounded-3xl relative overflow-hidden group">
+                    <div class="absolute bottom-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition duration-500">
+                        <i class="fa-solid fa-shield-halved text-9xl text-white"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <h3 class="text-2xl font-bold mb-4">Segurança & Privacidade</h3>
+                        <p class="text-gray-400 max-w-md">Não usamos os seus dados para treinar modelos públicos. O que acontece na Luso-IA, fica na Luso-IA.</p>
+                        <div class="mt-8 flex items-center gap-4 text-sm font-bold text-gray-300">
+                            <span class="flex items-center"><i class="fa-solid fa-lock text-green-500 mr-2"></i>Encriptado</span>
+                            <span class="flex items-center"><i class="fa-solid fa-user-shield text-green-500 mr-2"></i>Privado</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -152,25 +191,33 @@
     <!-- PORTAL DE PAÍSES -->
     <section id="paises" class="py-32 border-t border-white/5 bg-[#03081c]">
         <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16"><span class="text-blue-500 font-bold tracking-widest text-xs uppercase mb-4 block">Globalização</span><h2 class="font-display text-4xl md:text-6xl font-bold mb-6">Selecione o seu Mercado</h2><p class="text-gray-400">Preços ajustados à sua economia.</p></div>
+            <div class="text-center mb-16">
+                <span class="text-blue-500 font-bold tracking-widest text-xs uppercase mb-4 block">Globalização</span>
+                <h2 class="font-display text-4xl md:text-6xl font-bold mb-6">Selecione o seu Mercado</h2>
+                <p class="text-gray-400">Preços ajustados à sua economia.</p>
+            </div>
+
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button onclick="openCountry('pt')" class="glass p-6 rounded-2xl text-left group hover:border-blue-500 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/pt.png" class="h-6 rounded shadow-sm"></div><h3 class="font-bold text-lg text-white group-hover:text-blue-400 transition">Portugal</h3><p class="text-xs text-gray-500 mt-1">Zona Euro</p></button>
-                <button onclick="openCountry('br')" class="glass p-6 rounded-2xl text-left group hover:border-green-500 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/br.png" class="h-6 rounded shadow-sm"></div><h3 class="font-bold text-lg text-white group-hover:text-green-400 transition">Brasil</h3><p class="text-xs text-gray-500 mt-1">Reais</p></button>
-                <button onclick="openCountry('ao')" class="glass p-6 rounded-2xl text-left group hover:border-red-500 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/ao.png" class="h-6 rounded shadow-sm"></div><h3 class="font-bold text-lg text-white group-hover:text-red-400 transition">Angola</h3><p class="text-xs text-gray-500 mt-1">Kwanza</p></button>
-                <button onclick="openCountry('mz')" class="glass p-6 rounded-2xl text-left group hover:border-yellow-500 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/mz.png" class="h-6 rounded shadow-sm"></div><h3 class="font-bold text-lg text-white group-hover:text-yellow-400 transition">Moçambique</h3><p class="text-xs text-gray-500 mt-1">Metical</p></button>
-                <button onclick="openCountry('cv')" class="glass p-6 rounded-2xl text-left group hover:border-blue-400 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/cv.png" class="h-6 rounded shadow-sm"></div><h3 class="font-bold text-lg text-white group-hover:text-blue-300 transition">Cabo Verde</h3><p class="text-xs text-gray-500 mt-1">Escudo</p></button>
-                <button onclick="openCountry('gw')" class="glass p-6 rounded-2xl text-left group hover:border-red-400 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/gw.png" class="h-6 rounded shadow-sm"></div><h3 class="font-bold text-lg text-white group-hover:text-red-300 transition">Guiné-Bissau</h3><p class="text-xs text-gray-500 mt-1">Franco</p></button>
-                <button onclick="openCountry('st')" class="glass p-6 rounded-2xl text-left group hover:border-green-400 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/st.png" class="h-6 rounded shadow-sm"></div><h3 class="font-bold text-lg text-white group-hover:text-green-300 transition">São Tomé</h3><p class="text-xs text-gray-500 mt-1">Dobra</p></button>
-                <button onclick="openCountry('tl')" class="glass p-6 rounded-2xl text-left group hover:border-red-600 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/tl.png" class="h-6 rounded shadow-sm"></div><h3 class="font-bold text-lg text-white group-hover:text-red-400 transition">Timor-Leste</h3><p class="text-xs text-gray-500 mt-1">Dólar</p></button>
+                <button onclick="openCountry('pt')" class="glass p-6 rounded-2xl text-left group hover:border-blue-500 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/pt.png" class="h-6 rounded shadow-sm"><i class="fa-solid fa-arrow-right -rotate-45 text-gray-600 group-hover:text-white group-hover:rotate-0 transition"></i></div><h3 class="font-bold text-lg text-white group-hover:text-blue-400 transition">Portugal</h3><p class="text-xs text-gray-500 mt-1">Zona Euro</p></button>
+                <button onclick="openCountry('br')" class="glass p-6 rounded-2xl text-left group hover:border-green-500 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/br.png" class="h-6 rounded shadow-sm"><i class="fa-solid fa-arrow-right -rotate-45 text-gray-600 group-hover:text-white group-hover:rotate-0 transition"></i></div><h3 class="font-bold text-lg text-white group-hover:text-green-400 transition">Brasil</h3><p class="text-xs text-gray-500 mt-1">Reais</p></button>
+                <button onclick="openCountry('ao')" class="glass p-6 rounded-2xl text-left group hover:border-red-500 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/ao.png" class="h-6 rounded shadow-sm"><i class="fa-solid fa-arrow-right -rotate-45 text-gray-600 group-hover:text-white group-hover:rotate-0 transition"></i></div><h3 class="font-bold text-lg text-white group-hover:text-red-400 transition">Angola</h3><p class="text-xs text-gray-500 mt-1">Kwanza</p></button>
+                <button onclick="openCountry('mz')" class="glass p-6 rounded-2xl text-left group hover:border-yellow-500 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/mz.png" class="h-6 rounded shadow-sm"><i class="fa-solid fa-arrow-right -rotate-45 text-gray-600 group-hover:text-white group-hover:rotate-0 transition"></i></div><h3 class="font-bold text-lg text-white group-hover:text-yellow-400 transition">Moçambique</h3><p class="text-xs text-gray-500 mt-1">Metical</p></button>
+                <button onclick="openCountry('cv')" class="glass p-6 rounded-2xl text-left group hover:border-blue-400 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/cv.png" class="h-6 rounded shadow-sm"><i class="fa-solid fa-arrow-right -rotate-45 text-gray-600 group-hover:text-white group-hover:rotate-0 transition"></i></div><h3 class="font-bold text-lg text-white group-hover:text-blue-300 transition">Cabo Verde</h3><p class="text-xs text-gray-500 mt-1">Escudo</p></button>
+                <button onclick="openCountry('gw')" class="glass p-6 rounded-2xl text-left group hover:border-red-400 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/gw.png" class="h-6 rounded shadow-sm"><i class="fa-solid fa-arrow-right -rotate-45 text-gray-600 group-hover:text-white group-hover:rotate-0 transition"></i></div><h3 class="font-bold text-lg text-white group-hover:text-red-300 transition">Guiné-Bissau</h3><p class="text-xs text-gray-500 mt-1">Franco</p></button>
+                <button onclick="openCountry('st')" class="glass p-6 rounded-2xl text-left group hover:border-green-400 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/st.png" class="h-6 rounded shadow-sm"><i class="fa-solid fa-arrow-right -rotate-45 text-gray-600 group-hover:text-white group-hover:rotate-0 transition"></i></div><h3 class="font-bold text-lg text-white group-hover:text-green-300 transition">São Tomé</h3><p class="text-xs text-gray-500 mt-1">Dobra</p></button>
+                <button onclick="openCountry('tl')" class="glass p-6 rounded-2xl text-left group hover:border-red-600 transition"><div class="flex justify-between items-start mb-6"><img src="https://flagcdn.com/w80/tl.png" class="h-6 rounded shadow-sm"><i class="fa-solid fa-arrow-right -rotate-45 text-gray-600 group-hover:text-white group-hover:rotate-0 transition"></i></div><h3 class="font-bold text-lg text-white group-hover:text-red-400 transition">Timor-Leste</h3><p class="text-xs text-gray-500 mt-1">Dólar</p></button>
             </div>
         </div>
     </section>
 
-    <!-- FOOTER -->
+    <!-- FOOTER LEGAL -->
     <footer class="py-16 border-t border-white/5 text-sm bg-black/40">
         <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
             <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center mb-4"><img src="logo.png" alt="Luso-IA" class="h-10 w-auto opacity-70"></div>
+                <!-- LOGÓTIPO AUMENTADO NO FOOTER TAMBÉM (h-16) -->
+                <div class="flex items-center mb-4">
+                    <img src="logo.png" alt="Luso-IA Logo" class="h-16 w-auto opacity-70">
+                </div>
                 <p class="text-gray-600 mb-6 max-w-xs">A plataforma de inteligência artificial líder para a comunidade lusófona. Impulsione o seu negócio hoje.</p>
             </div>
             <div>
@@ -182,31 +229,56 @@
                 </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-gray-600"><p>&copy; 2025 Luso-IA. Todos os direitos reservados.</p></div>
+        <div class="max-w-7xl mx-auto px-6 mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-gray-600">
+            <p>&copy; 2025 Luso-IA. Todos os direitos reservados.</p>
+        </div>
     </footer>
 
-    <!-- OVERLAY PAÍS -->
-    <div id="country-overlay" class="fixed inset-0 bg-[#020617] z-[50] hidden overflow-y-auto fade-in">
+    <!-- OVERLAY DO PAÍS -->
+    <div id="country-overlay" class="fixed inset-0 bg-[#020617] z-[100] hidden overflow-y-auto fade-in">
         <div class="max-w-6xl mx-auto px-6 py-12">
-            <button onclick="closeCountry()" class="mb-10 flex items-center gap-2 text-gray-400 hover:text-white transition font-bold uppercase tracking-wider text-xs bg-white/5 px-4 py-2 rounded-full"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
-            
+            <button onclick="closeCountry()" class="mb-10 flex items-center gap-2 text-gray-400 hover:text-white transition font-bold uppercase tracking-wider text-xs bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-white/20">
+                <i class="fa-solid fa-arrow-left"></i> Voltar
+            </button>
+
             <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
                 <div>
                     <span id="ov-badge" class="px-3 py-1 rounded bg-blue-600 text-white text-xs font-bold uppercase tracking-wide mb-4 inline-block">Portugal</span>
                     <h2 id="ov-title" class="font-display text-4xl md:text-6xl font-bold mb-6">Título</h2>
                     <p id="ov-desc" class="text-xl text-gray-400 leading-relaxed">Descrição</p>
+                    
                     <div class="mt-8 p-8 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm">
-                        <div class="flex items-end gap-2 mb-2"><span id="ov-price" class="text-5xl font-extrabold text-white">19€</span><span class="text-gray-400 mb-2">/mês</span></div>
+                        <div class="flex items-end gap-2 mb-2">
+                            <span id="ov-price" class="text-5xl font-extrabold text-white">19€</span>
+                            <span class="text-gray-400 mb-2">/mês</span>
+                        </div>
                         <p id="ov-extra" class="text-sm text-gray-500 mb-6">Info extra</p>
-                        <a id="buy-button" href="https://tally.so/r/81qLVx" target="_blank" class="block w-full bg-white text-brand-900 hover:bg-gray-100 text-center text-lg font-bold px-8 py-4 rounded-xl transition transform hover:scale-[1.02]">Começar Agora <i class="fa-solid fa-arrow-right ml-2"></i></a>
+                        
+                        <a id="buy-button" href="https://tally.so/r/81qLVx" target="_blank" class="block w-full bg-white text-brand-900 hover:bg-gray-100 text-center text-lg font-bold px-8 py-4 rounded-xl transition transform hover:scale-[1.02]">
+                            Começar Agora <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                        <p class="text-center text-xs text-gray-500 mt-3"><i class="fa-solid fa-lock mr-1"></i> Pagamento Seguro via Stripe</p>
                     </div>
                 </div>
                 
+                <!-- Testemunhos (IMAGENS LOCAIS) -->
                 <div class="space-y-4">
                     <h3 class="font-bold text-gray-500 text-sm uppercase tracking-widest mb-4">Quem confia em nós</h3>
-                    <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start"><img id="ov-t1-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10"><div><p id="ov-t1-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t1-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t1-role" class="text-xs text-blue-400">Cargo</p></div></div>
-                    <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start"><img id="ov-t2-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10"><div><p id="ov-t2-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t2-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t2-role" class="text-xs text-blue-400">Cargo</p></div></div>
-                    <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start"><img id="ov-t3-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10"><div><p id="ov-t3-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t3-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t3-role" class="text-xs text-blue-400">Cargo</p></div></div>
+                    <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start">
+                        <!-- IMAGEM 1 -->
+                        <img id="ov-t1-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+                        <div><p id="ov-t1-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t1-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t1-role" class="text-xs text-blue-400">Cargo</p></div>
+                    </div>
+                    <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start">
+                        <!-- IMAGEM 2 -->
+                        <img id="ov-t2-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+                        <div><p id="ov-t2-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t2-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t2-role" class="text-xs text-blue-400">Cargo</p></div>
+                    </div>
+                    <div class="glass p-6 rounded-xl border border-white/5 flex gap-4 items-start">
+                        <!-- IMAGEM 3 -->
+                        <img id="ov-t3-img" src="" class="w-12 h-12 rounded-full object-cover border border-white/10" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3135/3135715.png'">
+                        <div><p id="ov-t3-text" class="text-gray-300 text-sm italic mb-2">"..."</p><p id="ov-t3-name" class="font-bold text-white text-sm">Nome</p><p id="ov-t3-role" class="text-xs text-blue-400">Cargo</p></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -214,22 +286,12 @@
 
     <script>
         const TALLY_LINK = "https://tally.so/r/81qLVx";
-        
+
         window.addEventListener('scroll', function() {
             const nav = document.getElementById('navbar');
             if (window.scrollY > 50) { nav.classList.add('nav-blur'); nav.classList.remove('py-4'); nav.classList.add('py-2'); } 
             else { nav.classList.remove('nav-blur'); nav.classList.add('py-4'); nav.classList.remove('py-2'); }
         });
-
-        // MODAL LOGIC
-        function openApp() {
-            document.getElementById('app-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeApp() {
-            document.getElementById('app-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
 
         function scrollToCountries() { document.getElementById('paises').scrollIntoView({ behavior: 'smooth' }); }
 
@@ -239,46 +301,47 @@
             document.body.style.overflow = 'hidden';
             document.getElementById('buy-button').href = TALLY_LINK;
 
+            // DADOS E IMAGENS LOCAIS (Pasta /fotos/)
             const data = {
                 'pt': { badge: "Portugal", title: "Marketing Nacional", desc: "Ideal para PMEs e Clínicas.", price: "19,90€", extra: "IVA incluído.", 
-                    t1: { t: "Finalmente uma IA que não escreve 'galera'.", n: "Miguel Ferreira", r: "Imobiliária Braga", img: "fotos/pt1.jpg" },
-                    t2: { t: "Poupei centenas de euros.", n: "Dra. Sofia Lima", r: "Dentista", img: "fotos/pt2.jpg" },
-                    t3: { t: "Essencial para pequeno negócio.", n: "Carlos Mendes", r: "Restaurante Porto", img: "fotos/pt3.jpg" }
+                    t1: { t: "Finalmente uma IA que não escreve 'galera'.", n: "Miguel Ferreira", r: "Imobiliária Braga", img: "fotos/pt1.jpg" }, 
+                    t2: { t: "Poupei centenas de euros.", n: "Dra. Sofia Lima", r: "Dentista", img: "fotos/pt2.jpg" }, 
+                    t3: { t: "Essencial para pequeno negócio.", n: "Carlos Mendes", r: "Restaurante Porto", img: "fotos/pt3.jpg" } 
                 },
                 'br': { badge: "Brasil", title: "Venda mais no Brasil", desc: "Textos persuasivos com gírias certas.", price: "R$ 59,90", extra: "Sem IOF.", 
-                    t1: { t: "Show de bola!", n: "Fernanda Oliveira", r: "Moda - SP", img: "fotos/br1.jpg" },
-                    t2: { t: "Melhor que o ChatGPT.", n: "Ricardo Almeida", r: "Marketing", img: "fotos/br2.jpg" },
-                    t3: { t: "Ferramenta top.", n: "Beatriz Santos", r: "Estética - RJ", img: "fotos/br3.jpg" }
+                    t1: { t: "Show de bola!", n: "Fernanda Oliveira", r: "Moda - SP", img: "fotos/br1.jpg" }, 
+                    t2: { t: "Melhor que o ChatGPT.", n: "Ricardo Almeida", r: "Marketing", img: "fotos/br2.jpg" }, 
+                    t3: { t: "Ferramenta top.", n: "Beatriz Santos", r: "Estética - RJ", img: "fotos/br3.jpg" } 
                 },
                 'ao': { badge: "Angola", title: "Marketing em Angola", desc: "Adaptada à realidade de Luanda.", price: "12.000 Kz", extra: "Preço ajustado.", 
-                    t1: { t: "Está a ajudar muito.", n: "Manuel Kiala", r: "Logística Luanda", img: "fotos/ao1.jpg" },
-                    t2: { t: "Textos profissionais.", n: "Isabel Domingos", r: "Eventos", img: "fotos/ao2.jpg" },
-                    t3: { t: "Funciona bem com a net.", n: "Paulo Tati", r: "Consultor", img: "fotos/ao3.jpg" }
+                    t1: { t: "Está a ajudar muito.", n: "Manuel Kiala", r: "Logística Luanda", img: "fotos/ao1.jpg" }, 
+                    t2: { t: "Textos profissionais.", n: "Isabel Domingos", r: "Eventos", img: "fotos/ao2.jpg" }, 
+                    t3: { t: "Funciona bem com a net.", n: "Paulo Tati", r: "Consultor", img: "fotos/ao3.jpg" } 
                 },
                 'mz': { badge: "Moçambique", title: "Soluções Digitais", desc: "Conteúdo relevante para Maputo.", price: "590 MT", extra: "Valor acessível.", 
-                    t1: { t: "Facilitou o meu trabalho.", n: "Samora Matsinhe", r: "Turismo", img: "fotos/mz1.jpg" },
-                    t2: { t: "Entende quando ser formal.", n: "Nélia Jossias", r: "Finanças", img: "fotos/mz2.jpg" },
-                    t3: { t: "Uma revolução.", n: "Filipe Cossa", r: "Comércio", img: "fotos/mz3.jpg" }
+                    t1: { t: "Facilitou o meu trabalho.", n: "Samora Matsinhe", r: "Turismo", img: "fotos/mz1.jpg" }, 
+                    t2: { t: "Entende quando ser formal.", n: "Nélia Jossias", r: "Finanças", img: "fotos/mz2.jpg" }, 
+                    t3: { t: "Uma revolução.", n: "Filipe Cossa", r: "Comércio", img: "fotos/mz3.jpg" } 
                 },
                 'cv': { badge: "Cabo Verde", title: "Marketing no Arquipélago", desc: "Comunique na Praia.", price: "1.290$00", extra: "Pagamento seguro.", 
-                    t1: { t: "Muito bom para o hotel.", n: "Joana Fortes", r: "Hotelaria Sal", img: "fotos/cv1.jpg" },
-                    t2: { t: "Rápido e eficaz.", n: "Marco Lopes", r: "Rent-a-Car", img: "fotos/cv2.jpg" },
-                    t3: { t: "Recomendo.", n: "Sónia Varela", r: "Artesanato", img: "fotos/cv3.jpg" }
+                    t1: { t: "Muito bom para o hotel.", n: "Joana Fortes", r: "Hotelaria Sal", img: "fotos/cv1.jpg" }, 
+                    t2: { t: "Rápido e eficaz.", n: "Marco Lopes", r: "Rent-a-Car", img: "fotos/cv2.jpg" }, 
+                    t3: { t: "Recomendo.", n: "Sónia Varela", r: "Artesanato", img: "fotos/cv3.jpg" } 
                 },
                 'gw': { badge: "Guiné-Bissau", title: "Inovação em Bissau", desc: "Impulsione o comércio.", price: "6.500 XOF", extra: "Preço especial.", 
-                    t1: { t: "Ajuda a escrever sem erros.", n: "Amadu Baldé", r: "Comércio Bissau", img: "fotos/gw1.jpg" },
-                    t2: { t: "Uso para a loja.", n: "Fatima Seidi", r: "Moda", img: "fotos/gw2.jpg" },
-                    t3: { t: "Muito fácil.", n: "Umaro Djaló", r: "Serviços", img: "fotos/gw3.jpg" }
+                    t1: { t: "Ajuda a escrever sem erros.", n: "Amadu Baldé", r: "Comércio Bissau", img: "fotos/gw1.jpg" }, 
+                    t2: { t: "Uso para a loja.", n: "Fatima Seidi", r: "Moda", img: "fotos/gw2.jpg" }, 
+                    t3: { t: "Muito fácil.", n: "Umaro Djaló", r: "Serviços", img: "fotos/gw3.jpg" } 
                 },
                 'st': { badge: "São Tomé", title: "Marketing Leve-Leve", desc: "Promova o turismo local.", price: "350 STN", extra: "Nova Dobra.", 
-                    t1: { t: "Excelente para tours.", n: "Pedro Afonso", r: "Guia", img: "fotos/st1.jpg" },
-                    t2: { t: "Página atualizada.", n: "Maria Nazaré", r: "Restauração", img: "fotos/st2.jpg" },
-                    t3: { t: "Grande ajuda.", n: "João Lima", r: "Agricultura", img: "fotos/st3.jpg" }
+                    t1: { t: "Excelente para tours.", n: "Pedro Afonso", r: "Guia", img: "fotos/st1.jpg" }, 
+                    t2: { t: "Página atualizada.", n: "Maria Nazaré", r: "Restauração", img: "fotos/st2.jpg" }, 
+                    t3: { t: "Grande ajuda.", n: "João Lima", r: "Agricultura", img: "fotos/st3.jpg" } 
                 },
                 'tl': { badge: "Timor-Leste", title: "Tecnologia em Díli", desc: "Conexão com a Ásia Lusófona.", price: "$12.00", extra: "Pagamento USD.", 
-                    t1: { t: "Ajuda no português.", n: "José Ximenes", r: "Admin", img: "fotos/tl1.jpg" },
-                    t2: { t: "Muito útil.", n: "Maria Jesus", r: "Café Díli", img: "fotos/tl2.jpg" },
-                    t3: { t: "Melhor ferramenta.", n: "Rui Gusmão", r: "Import", img: "fotos/tl3.jpg" }
+                    t1: { t: "Ajuda no português.", n: "José Ximenes", r: "Admin", img: "fotos/tl1.jpg" }, 
+                    t2: { t: "Muito útil.", n: "Maria Jesus", r: "Café Díli", img: "fotos/tl2.jpg" }, 
+                    t3: { t: "Melhor ferramenta.", n: "Rui Gusmão", r: "Import", img: "fotos/tl3.jpg" } 
                 }
             };
 
